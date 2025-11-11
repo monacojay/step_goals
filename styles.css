@@ -1,0 +1,104 @@
+:root{
+  --bg:#0f1115; --card:#151821; --ring:#1f2431; --text:#e9edf1; --muted:#a7b0be;
+  --accent:#7bd389; --accent-hi:#9ef3a3; --danger:#ef4444; --radius:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg); color:var(--text)
+}
+.wrap{max-width:880px;margin:0 auto;padding:28px 16px}
+
+/* Header + actions */
+.page-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.page-header h1{margin:0;font-size:22px;letter-spacing:.3px}
+.actions{display:flex;gap:10px;align-items:center}
+.actions button{
+  appearance:none;border:1px solid var(--ring);background:#0e131a;color:var(--text);
+  padding:8px 12px;border-radius:10px;cursor:pointer
+}
+.actions button:hover{border-color:var(--accent)}
+.actions .danger{border-color:#3a1f23;color:#ffd5d8;background:#1a0f11}
+
+/* Card + form */
+.card{background:var(--card);border:1px solid var(--ring);border-radius:var(--radius);padding:16px;margin:16px 0}
+.card h3{margin:0 0 10px;font-size:18px}
+.row{display:flex;gap:10px}
+.row input[type="text"]{
+  flex:1;background:#0f131a;border:1px solid var(--ring);border-radius:10px;color:var(--text);padding:10px 12px
+}
+.row button{
+  border:1px solid var(--ring);background:#0e131a;color:var(--text);padding:10px 12px;border-radius:10px;cursor:pointer
+}
+.row button:hover{border-color:var(--accent)}
+
+.stack{display:grid;gap:12px}
+
+/* Leap card */
+.leap{background:var(--card);border:1px solid var(--ring);border-radius:var(--radius);overflow:hidden;break-inside:avoid}
+.leap-head{
+  display:flex;gap:12px;align-items:center;justify-content:space-between;
+  padding:12px 14px;border-bottom:1px solid var(--ring)
+}
+.leap-title{display:flex;gap:10px;align-items:center;flex:1}
+.leap-title .label{font-weight:700}
+.leap-title input{
+  flex:1;background:#0f131a;border:1px solid var(--ring);border-radius:10px;color:var(--text);padding:8px 10px
+}
+.leap-ctl{display:flex;gap:8px}
+.icon-btn{
+  border:1px solid var(--ring);background:#0e131a;color:var(--text);padding:6px 8px;border-radius:10px;cursor:pointer
+}
+.icon-btn:hover{border-color:var(--accent)}
+.icon-btn.danger{border-color:#3a1f23;color:#ffd5d8;background:#1a0f11}
+
+/* New Step Goal card (inside each leap, compact) */
+.new-step-card {
+  background:#0f131a;
+  border:1px solid var(--ring);
+  border-radius:12px;
+  padding:10px 12px;
+  margin:10px 14px;
+}
+.new-step-card h4{margin:0 0 6px;font-size:15px;color:var(--muted)}
+.add-step-form.row input{flex:1;padding:8px 10px;font-size:14px}
+.add-step-form.row button{padding:8px 10px;font-size:14px}
+
+/* Steps list */
+.steps{padding:12px 14px;display:grid;gap:8px}
+.step{
+  display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:center;
+  background:#0f131a;border:1px solid var(--ring);border-radius:10px;padding:8px 10px
+}
+.step input[type="checkbox"]{width:16px;height:16px}
+.step input[type="text"]{
+  background:#0d1218;border:1px solid var(--ring);border-radius:8px;color:var(--text);padding:6px 8px
+}
+.step .rm{border-color:#3a1f23;color:#ffd5d8;background:#1a0f11}
+
+/* Footer */
+a{color:var(--accent)}
+.footer{margin:18px 2px 8px;color:var(--muted);text-align:center;font-size:12px}
+
+/* Print styles */
+.print-only{display:none}
+.no-print{}
+
+/* Tidy PDF output */
+@media print {
+  html, body { background:#fff; color:#000; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .no-print { display:none !important; }
+  .print-only { display:block; margin-bottom:8px; color:#333; font-size:12px; }
+  .wrap { max-width:none; padding:0 12mm; }
+  .card, .leap, .step, .new-step-card {
+    background:#fff !important;
+    border:1px solid #ccc !important;
+  }
+  .leap-title input, .step input[type="text"] {
+    background:#fff !important; color:#000 !important; border:1px solid #bbb !important;
+  }
+  .step { grid-template-columns:20px 1fr; }
+  .step .rm { display:none !important; }
+  .no-break { break-inside:avoid; }
+}
