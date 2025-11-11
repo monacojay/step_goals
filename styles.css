@@ -55,14 +55,31 @@ body{
 .icon-btn.danger{border-color:#3a1f23;color:#ffd5d8;background:#1a0f11}
 
 /* New Step Goal card (inside each leap) */
-.new-step-card{
-  background:var(--card);
-  border:1px solid var(--ring);
-  border-radius:var(--radius);
-  padding:16px;
-  margin:12px 14px 8px;
+/* New Step Goal card (inside each leap) */
+.new-step-card {
+  background: #0f131a;                 /* darker, subtle background */
+  border: 1px solid var(--ring);
+  border-radius: 12px;                 /* slightly smaller radius */
+  padding: 10px 12px;                  /* less padding */
+  margin: 10px 14px;                   /* tighter spacing */
 }
-.new-step-card h4{margin:0 0 8px;font-size:16px}
+
+.new-step-card h4 {
+  margin: 0 0 6px;
+  font-size: 15px;                     /* smaller header text */
+  color: var(--muted);
+}
+
+.new-step-card .row input[type="text"] {
+  padding: 8px 10px;                   /* smaller input padding */
+  font-size: 14px;
+}
+
+.new-step-card .row button {
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
 
 /* Steps list */
 .steps{padding:12px 14px;display:grid;gap:8px}
