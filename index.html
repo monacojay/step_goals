@@ -1,1 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Leap & Step Goals</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="page-header">
+      <h1>Leap & Step Goals</h1>
+      <div class="actions">
+        <button id="exportBtn" title="Download your goals as JSON">Export</button>
+        <label class="import">
+          <input id="importInput" type="file" accept="application/json" hidden />
+          <span>Import</span>
+        </label>
+        <button id="clearAllBtn" class="danger" title="Remove everything">Clear All</button>
+      </div>
+    </header>
+
+    <section class="card">
+      <h3>Create a Leap</h3>
+      <form id="newLeapForm" class="row">
+        <input id="newLeapTitle" type="text" placeholder="Leap title (e.g., Launch my website)" required />
+        <button type="submit">Add Leap</button>
+      </form>
+    </section>
+
+    <section id="leaps" class="stack"></section>
+
+    <footer class="footer">
+      <small>Data is saved locally in your browser.</small>
+    </footer>
+  </div>
+
+  <script>
+  const STORAGE_KEY = 'leapGoalsV1';
+  let leaps = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  const leapsRoot = document.getElementById('leaps');
+  const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(leaps));
+
+  function uid(p='id'){return p+'_'+Math.random().toString(36).slice(2,9);}
+  function render(){
+    leapsRoot.innerHTML='';
+    if(!leaps.length){
+      leapsRoot.innerHTML='<div class="card"><p style="color:var(--muted);margin:0">No leaps yet. Create your first one above.</p></div>';
+      return;
+    }
+    for(const leap of leaps){
+      const done = leap.steps.filter(s=>s.done).length, total=leap.steps.length, pct=total?Math.round(done/total*100):0;
+      const el=document.createElement('section');
+      el.className='leap'; el.dataset.id=leap.id;
+      el.innerHTML=`
+        <div class="leap-head">
+          <div class="leap-title">
+            <span class="label">Leap:</span>
+            <input type="text" class="leap-input" value="${leap.title}" />
+          </div>
+          <div class="leap-ctl">
+            <button class="icon-btn add-step-btn">＋ Step</button>
+            <button class="icon-btn danger delete-leap-btn">🗑</button>
+          </div>
+        </div>
+        <div class="progress">
+          <div class="progressbar"><div style="width:${pct}%"></div></div>
+          <div class="progress-label">${done}/${total} steps complete • ${pct}%</div>
+        </div>
+        <div class="steps">
+          ${leap.steps.map(s=>`
+            <div class="step" data-step="${s.id}">
+              <input type="checkbox" class="step-done" ${s.done?'checked':''}/>
+              <input type="text" class="step-text" value="${s.text}"/>
+              <button class="icon-btn rm step-remove">✖</button>
+            </div>`).join('')}
+          <div class="add-step">
+            <input type="text" class="new-step-text" placeholder="New step..." />
+            <button class="add-step-confirm">Add</button>
+          </div>
+        </div>`;
+      leapsRoot.appendChild(el);
+    }
+  }
+  function addLeap(title){leaps.push({id:uid('l'),title,steps:[]});save();render();}
+  document.getElementById('newLeapForm').onsubmit=e=>{
+    e.preventDefault();
+    const t=e.target.querySelector('input').value.trim();
+    if(!t)return;
+    addLeap(t); e.target.reset();
+  };
+  document.addEventListener('click',e=>{
+    const el=e.target.closest('.leap'); if(!el)return;
+    const id=el.dataset.id; const leap=leaps.find(l=>l.id===id);
+    if(e.target.classList.contains('add-step-btn')||e.target.classList.contains('add-step-confirm')){
+      const inp=el.querySelector('.new-step-text'); if(!inp.value.trim())return;
+      leap.steps.push({id:uid('s'),text:inp.value.trim(),done:false});save();render();
+    }
+    if(e.target.classList.contains('delete-leap-btn')){
+      if(confirm('Delete this leap?')){leaps=leaps.filter(l=>l.id!==id);save();render();}
+    }
+    if(e.target.classList.contains('step-remove')){
+      const sid=e.target.closest('.step').dataset.step;
+      leap.steps=leap.steps.filter(s=>s.id!==sid);save();render();
+    }
+  });
+  document.addEventListener('input',e=>{
+    const el=e.target.closest('.leap'); if(!el)return;
+    const id=el.dataset.id; const leap=leaps.find(l=>l.id===id);
+    if(e.target.classList.contains('leap-input')){leap.title=e.target.value;save();}
+    if(e.target.classList.contains('step-text')){
+      const sid=e.target.closest('.step').dataset.step;
+      leap.steps.find(s=>s.id===sid).text=e.target.value;save();
+    }
+  });
+  document.addEventListener('change',e=>{
+    if(e.target.classList.contains('step-done')){
+      const el=e.target.closest('.leap'); const id=el.dataset.id;
+      const leap=leaps.find(l=>l.id===id);
+      const sid=e.target.closest('.step').dataset.step;
+      leap.steps.find(s=>s.id===sid).done=e.target.checked;save();render();
+    }
+  });
+  document.getElementById('clearAllBtn').onclick=()=>{
+    if(confirm('Clear all data?')){leaps=[];save();render();}
+  };
+  document.getElementById('exportBtn').onclick=()=>{
+    const blob=new Blob([JSON.stringify(leaps,null,2)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='leap_goals.json';a.click();
+  };
+  document.getElementById('importInput').onchange=async e=>{
+    const f=e.target.files?.[0]; if(!f)return;
+    const txt=await f.text(); try{leaps=JSON.parse(txt);save();render();}catch{alert('Invalid file');}
+  };
+  render();
+  </script>
+</body>
+</html>
 
