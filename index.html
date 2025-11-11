@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Leap Goals</title>
+  <title>Goals List</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="wrap">
     <header class="page-header">
-      <h1>Leap Goals</h1>
+      <h1>Goals List, steps and leaps...</h1>
       <div class="actions no-print">
         <button id="exportBtn" title="Export / Save as PDF">Export</button>
         <button id="clearAllBtn" class="danger" title="Remove everything">Clear All</button>
@@ -58,7 +58,7 @@
     if (!leaps.length){
       const empty = document.createElement('div');
       empty.className = 'card';
-      empty.innerHTML = '<p style="color:var(--muted);margin:0">No leaps yet. Create your first one above.</p>';
+      empty.innerHTML = '<p style="color:var(--muted);margin:0">Create a leap goal, then create supporting step goals for each leap goal.</p>';
       leapsRoot.appendChild(empty);
       return;
     }
