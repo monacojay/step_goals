@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Leap & Step Goals</title>
+  <title>Leap Goals</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="wrap">
     <header class="page-header">
-      <h1>Leap & Step Goals</h1>
+      <h1>Leap Goals</h1>
       <div class="actions">
         <button id="exportBtn" title="Download your goals as JSON">Export</button>
         <label class="import">
@@ -21,7 +21,7 @@
     </header>
 
     <section class="card">
-      <h3>Create a Leap</h3>
+      <h3>New Leap Goal</h3>
       <form id="newLeapForm" class="row">
         <input id="newLeapTitle" type="text" placeholder="Leap title (e.g., Launch my website)" required />
         <button type="submit">Add Leap</button>
@@ -66,7 +66,7 @@
       el.innerHTML = `
         <div class="leap-head">
           <div class="leap-title">
-            <span class="label">Leap:</span>
+            <span class="label">Leap Goal:</span>
             <input type="text" class="leap-input" value="${esc(leap.title)}" />
           </div>
           <div class="leap-ctl">
