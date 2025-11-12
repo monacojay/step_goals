@@ -74,12 +74,14 @@
           </div>
         </div>
 
-        <!-- grid body mirrors label/input columns so everything lines up -->
+        <!-- Body grid mirrors header: [label | input] -->
         <div class="leap-body">
           <div class="spacer"></div>
 
+          <!-- Steps heading aligned under the LABEL (column 1) -->
           <h4 class="steps-heading">Steps</h4>
 
+          <!-- List under input (column 2) -->
           <div class="steps">
             ${leap.steps.map(s => `
               <div class="step" data-step="${s.id}">
@@ -90,6 +92,7 @@
             `).join('')}
           </div>
 
+          <!-- Add-new under the list (column 2) -->
           <section class="card new-step-card no-break">
             <h4>New Supporting Step Goal</h4>
             <form class="add-step-form row">
@@ -99,7 +102,6 @@
           </section>
         </div>
       `;
-
       leapsRoot.appendChild(el);
     }
   }
@@ -114,7 +116,7 @@
     save(); input.value = ''; render();
   });
 
-  // Add Step (per-leap form)
+  // Add Step
   document.addEventListener('submit', (e)=>{
     if (!e.target.classList.contains('add-step-form')) return;
     e.preventDefault();
@@ -128,11 +130,10 @@
     save(); inp.value = ''; render();
   });
 
-  // Click handlers (remove step, delete leap)
+  // Click handlers
   document.addEventListener('click', (e)=>{
     const host = e.target.closest('.leap');
     if (!host) return;
-
     const leapId = host.dataset.id;
     const leap = leaps.find(l => l.id === leapId);
     if (!leap) return;
@@ -161,8 +162,8 @@
       leap.title = e.target.value; save();
     }
     if (e.target.classList.contains('step-text')){
-      const stepId = e.target.closest('.step').dataset.step;
-      const step = leap.steps.find(s => s.id === stepId);
+      const id = e.target.closest('.step').dataset.step;
+      const step = leap.steps.find(s => s.id === id);
       if (step){ step.text = e.target.value; save(); }
     }
   });
@@ -171,8 +172,8 @@
     if (!e.target.classList.contains('step-done')) return;
     const host = e.target.closest('.leap');
     const leap = leaps.find(l => l.id === host.dataset.id);
-    const stepId = e.target.closest('.step').dataset.step;
-    const step = leap?.steps.find(s => s.id === stepId);
+    const id = e.target.closest('.step').dataset.step;
+    const step = leap?.steps.find(s => s.id === id);
     if (step){ step.done = e.target.checked; save(); render(); }
   });
 
