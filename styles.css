@@ -108,10 +108,12 @@ body{
   font-weight: 300;
   color: #888;
 
-  width: 60%;          /* only take up 60% of the app box */
+  width: 75%;          /* only take up 60% of the app box */
   margin-left: 20px;   /* inset from the left */
   margin-top: 40px;    /* space from content above */
+  margin-bottom: 200px;
   text-align: left;
+
 }
 
 /* Footer */
