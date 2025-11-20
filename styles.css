@@ -14,7 +14,7 @@ body{
 
 /* Header + actions */
 .page-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
-.page-header h1{margin:0;font-size:22px;letter-spacing:.3px}
+.page-header h1{margin:0;font-size:24px;letter-spacing:.3px}
 .actions{display:flex;gap:10px;align-items:center}
 .actions button{
   appearance:none;border:1px solid var(--ring);background:#0e131a;color:var(--text);
@@ -103,10 +103,11 @@ body{
 
 #stepgoals-info {
   font-size: 14px;
+  font-weight: 300;
   line-height: 1.4;
   color: #444;
 
-  max-width: 420px;   /* narrower than the app */
+  max-width: 360px;   /* narrower than the app */
   margin: 20px auto 0;
   text-align: center;
 }
