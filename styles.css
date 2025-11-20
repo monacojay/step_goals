@@ -102,23 +102,16 @@ body{
 .add-step-form.row button{padding:8px 10px;font-size:14px}
 
 #stepgoals-info {
+  font-family: "Georgia", "Times New Roman", serif;  /* letter-style font */
   font-size: 14px;
-  font-weight: 300;
   line-height: 1.4;
-  color: #777;
+  font-weight: 300;
+  color: #666;
 
-  max-width: 72%;   /* narrower than the app */
-  margin-left: 10px;
-  text-align: left;
-}
-
-#stepgoals-info p {
-  margin-bottom: 12px;
-}
-
-#stepgoals-info .dedication {
-  font-weight: 600;
-  margin-top: 16px;
+  width: calc(100% - 40px);   /* full width minus padding */
+  margin-left: 20px;          /* 20px from the left edge */
+  margin-top: 25px;           /* 25px down from the app box */
+  text-align: left;           /* left align the text */
 }
 
 /* Footer */
